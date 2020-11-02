@@ -20,5 +20,8 @@ from forum import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('accounts.urls')),
+    # forum
     path('', views.home, name='home'),
+
 ]
