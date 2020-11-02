@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from accounts.forms import SignUpForm
+from accounts.forms import SignUpForm, LoginForm
 from accounts.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_protect
 
@@ -33,3 +33,18 @@ def logoutuser(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
+
+
+def log(request):
+    if request.method == 'GET':
+        return render(request, 'accounts/log.html', {'form': LoginForm()})
+    else:
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            error = "Incorrect username, email or password. Try again."
+            return render(request, 'accounts/log.html',
+                          {'form': LoginForm(), 'error': error})
