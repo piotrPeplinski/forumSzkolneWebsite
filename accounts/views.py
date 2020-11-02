@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from accounts.forms import SignUpForm
 from accounts.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_protect
 
@@ -27,3 +27,9 @@ def sign(request):
             error = "Passwords didn't match. Try again."
             return render(request, 'accounts/sign.html',
                           {'form': SignUpForm(), 'error': error})
+
+
+def logoutuser(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('home')
