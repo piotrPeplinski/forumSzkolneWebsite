@@ -123,3 +123,6 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
+
+MEDIA_ROOT =  BASE_DIR / 'media'
+MEDIA_URL = '/media/'
