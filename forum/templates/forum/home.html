@@ -1,9 +1,7 @@
-{% if user.is_authenticated %}
-<p>Logged in as {{user.username}}</p>
-<form action="{% url 'accounts:logoutuser' %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
-{% endif %}
+{% extends 'forum/base.html' %}
+{% block content %}
 
-<h1>Home page</h1> 
+<h1>Home page</h1>
+
+
+{% endblock content %}
