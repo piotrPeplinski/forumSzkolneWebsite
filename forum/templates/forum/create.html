@@ -1,0 +1,14 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+
+<h1>Zadaj pytanie</h1>
+{{error}}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Zadaj pytanie</button>
+</form>
+
+
+
+{% endblock content %}

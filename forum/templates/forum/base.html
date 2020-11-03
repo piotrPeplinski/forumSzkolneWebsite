@@ -5,6 +5,7 @@
     <button type="submit">Log Out</button>
 </form>
 <a href="{% url 'latest' %}">Najnowsze pytania</a>
+<a href="{% url 'create' %}">Zadaj pytanie</a>
 {% else %}
 <a href="{% url 'accounts:sign' %}">Sign up</a>
 <a href="{% url 'accounts:log' %}">Log in</a>

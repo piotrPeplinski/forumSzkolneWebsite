@@ -26,6 +26,7 @@ urlpatterns = [
     # forum
     path('', views.home, name='home'),
     path('latest', views.latest, name='latest'),
+    path('create', views.create, name='create'),
 
 ]
 
