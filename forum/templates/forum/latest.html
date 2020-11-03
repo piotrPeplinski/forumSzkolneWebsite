@@ -1,0 +1,20 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+
+
+<h1>Najnowsze pytania</h1>
+
+
+{% for question in questions %}
+<h2>{{question.title}}</h2>
+<p>{{question.createDate}}</p>
+<p>{{question.desc}}</p>
+
+{% if question.image %}
+<img src="{{question.image.url}}">
+{% endif %}
+
+{% endfor %}
+
+
+{% endblock content %}

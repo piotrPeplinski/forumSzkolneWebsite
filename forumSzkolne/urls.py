@@ -25,6 +25,7 @@ urlpatterns = [
     path('auth/', include('accounts.urls')),
     # forum
     path('', views.home, name='home'),
+    path('latest', views.latest, name='latest'),
 
 ]
 
