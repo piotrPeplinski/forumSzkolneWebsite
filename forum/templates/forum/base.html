@@ -4,6 +4,7 @@
     {% csrf_token %}
     <button type="submit">Log Out</button>
 </form>
+<a href="{% url 'latest' %}">Najnowsze pytania</a>
 {% else %}
 <a href="{% url 'accounts:sign' %}">Sign up</a>
 <a href="{% url 'accounts:log' %}">Log in</a>
