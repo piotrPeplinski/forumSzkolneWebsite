@@ -69,3 +69,8 @@ def deleteQuestion(request, questionId):
         question = get_object_or_404(Question, pk=questionId)
         question.delete()
         return redirect('my')
+
+
+def detail(request, questionId):
+    question = get_object_or_404(Question, pk=questionId)
+    return render(request, 'forum/detail.html', {'question': question})

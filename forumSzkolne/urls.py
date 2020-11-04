@@ -30,7 +30,7 @@ urlpatterns = [
     path('my', views.my, name='my'),
     path('my/<int:questionId>', views.myDetail, name='myDetail'),
     path('my/<int:questionId>/delete', views.deleteQuestion, name='delete'),
-
+    path('latest/<int:questionId>', views.detail, name='detail'),
 ]
 
 if settings.DEBUG:

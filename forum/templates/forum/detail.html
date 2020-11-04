@@ -1,15 +1,7 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
-
-<h1>Najnowsze pytania</h1>
-
-
-{% for question in questions %}
-<a href="{% url 'detail' question.id %}">
-    <h2>{{question.title}}</h2>
-</a>
-
+<h1>{{question.title}}</h1>
 <p>{{question.createDate}}</p>
 <p>{{question.desc}}</p>
 
@@ -17,7 +9,9 @@
 <img src="{{question.image.url}}">
 {% endif %}
 
-{% endfor %}
+{% if question.user == user %}
+<a href="{% url 'myDetail' question.id %}">Edytuj</a>
+{% endif %}
 
 
 {% endblock content %}
