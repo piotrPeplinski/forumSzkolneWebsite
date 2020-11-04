@@ -50,6 +50,10 @@
     <button type="submit">Zapisz</button>
     {% csrf_token %}
 </form>
+<form action="{% url 'delete' question.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Usuń pytanie</button>
+</form>
 
 
 {% endblock content %}

@@ -62,3 +62,10 @@ def myDetail(request, questionId):
             return render(request, 'forum/myDetail.html',
                           {'form': QuestionForm(instance=question), 'error': error,
                            'question': question})
+
+
+def deleteQuestion(request, questionId):
+    if request.method == 'POST':
+        question = get_object_or_404(Question, pk=questionId)
+        question.delete()
+        return redirect('my')
