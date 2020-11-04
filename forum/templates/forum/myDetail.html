@@ -1,0 +1,55 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+
+
+<h1>Edytuj pytanie</h1>
+
+<h4>{{error}}</h4>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrfmiddlewaretoken"
+        value="eMhbcSesUA524ztDnlFVUc5RhHsFL6vU9dvAW8uVATc2ksKT5nvq9TSvCYT0Yp0y">
+
+    <p><label for="id_title">Title:</label> <input type="text" name="title" value="{{question.title}}" maxlength="300"
+            required="" id="id_title"></p>
+
+    <p><label for="id_desc">Desc:</label> <textarea name="desc" cols="40" rows="10" required=""
+            id="id_desc">{{question.desc}}</textarea></p>
+
+    <p>{{form.image}}</p>
+
+    <p><select name="school" id="id_school" required>
+            {% for id,school in question.schools %}
+
+            {% if id == question.school %}
+            <option value="{{id}}" selected>{{school}}</option>
+            {% elif id == "" %}
+            <option value="{{id}}" disabled>{{school}}</option>
+            {% else %}
+            <option value="{{id}}">{{school}}</option>
+            {% endif %}
+
+            {% endfor %}
+        </select></p>
+
+    <p><select name="subject" id="id_subject" required>
+            {% for id,subject in question.subjects %}
+
+            {% if id == question.subject %}
+            <option value="{{id}}" selected>{{subject}}</option>
+            {% elif id == "" %}
+            <option value="{{id}}" disabled>{{subject}}</option>
+            {% else %}
+            <option value="{{id}}">{{subject}}</option>
+            {% endif %}
+
+            {% endfor %}
+        </select></p>
+
+
+    <button type="submit">Zapisz</button>
+    {% csrf_token %}
+</form>
+
+
+{% endblock content %}

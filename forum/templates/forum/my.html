@@ -1,0 +1,21 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+
+<h1>Moje Pytania</h1>
+
+
+{% for question in questions %}
+<a href="{% url 'myDetail' question.id %}">
+    <h2>{{question.title}}</h2>
+</a>
+<p>{{question.createDate}}</p>
+<p>{{question.desc}}</p>
+
+{% if question.image %}
+<img src="{{question.image.url}}">
+{% endif %}
+
+{% endfor %}
+
+
+{% endblock content %}

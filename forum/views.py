@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from forum.models import Question
 from forum.forms import QuestionForm
 
@@ -27,3 +27,38 @@ def create(request):
             error = 'Something went wrong. Try again.'
             return render(request, 'forum/create.html',
                           {'form': QuestionForm(), 'error': error})
+
+
+def my(request):
+    questions = Question.objects.filter(user=request.user)
+    return render(request, 'forum/my.html', {'questions': questions})
+
+
+def myDetail(request, questionId):
+    '''
+    mySchools = {'ms': 'Szkoła Średnia',
+                 'ps': 'Szkoła Podstawowa', 'cl': 'Studia'}
+    mySubjects = {'mat': 'Matematyka', 'fiz': 'Fizyka', 'Inf': 'Informatyka',
+                  'pol': 'Język Polski', 'ang': 'Język Angielski', 'nmc': 'Język Niemiecki',
+                  'his': 'Historia', 'bio': 'Biologia', 'che': 'Chemia', 'geo': 'Geografia'}
+    mySchool = mySchools[question.school]
+    mySubject = mySubjects[question.subject]
+    '''
+
+    question = get_object_or_404(
+        Question, pk=questionId, user=request.user)
+
+    if request.method == 'GET':
+        form = QuestionForm(instance=question)
+        return render(request, 'forum/myDetail.html',
+                      {'form': form, 'question': question})
+    else:
+        form = QuestionForm(request.POST, request.FILES, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect('my')
+        else:
+            error = 'Something went wrong. Try again.'
+            return render(request, 'forum/myDetail.html',
+                          {'form': QuestionForm(instance=question), 'error': error,
+                           'question': question})
