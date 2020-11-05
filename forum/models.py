@@ -49,7 +49,10 @@ class Question(Model):
         now = datetime.now(mytimezone)
         if self.createDate.date() == now.date():
             if self.createDate.hour == now.hour:
-                return str(now.minute - self.createDate.minute)+" min. temu"
+                if now.minute - self.createDate.minute !=0:
+                    return str(now.minute - self.createDate.minute)+" min. temu"
+                else:
+                    return "teraz"
             else:
                 return str(now.hour - self.createDate.hour)+" godz. temu"
         else:
