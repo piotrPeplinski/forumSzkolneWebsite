@@ -31,6 +31,7 @@ urlpatterns = [
     path('my/<int:questionId>', views.myDetail, name='myDetail'),
     path('my/<int:questionId>/delete', views.deleteQuestion, name='delete'),
     path('latest/<int:questionId>', views.detail, name='detail'),
+    path('latest/<int:questionId>/like', views.like, name='like'),
 ]
 
 if settings.DEBUG:

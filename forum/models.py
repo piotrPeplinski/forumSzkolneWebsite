@@ -34,5 +34,10 @@ class Question(Model):
     subject = CharField(max_length=3, choices=subjects,
                         default='')
 
+    likes = ManyToManyField(User, related_name='likes', blank=True)
+
     def __str__(self):
         return self.title
+
+    def total_likes(self):
+        return self.likes.count()

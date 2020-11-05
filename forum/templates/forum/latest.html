@@ -17,6 +17,19 @@
 <img src="{{question.image.url}}">
 {% endif %}
 
+{{question.total_likes}}
+
+<form action="{% url 'like' question.id %}" method="POST">
+    {% csrf_token %}
+
+    {% if question.is_liked %}
+    <button type="submit">Dislike</button>
+
+    {% else %}
+    <button type="submit">Like</button>
+    {% endif %}
+</form>
+
 {% endfor %}
 
 
