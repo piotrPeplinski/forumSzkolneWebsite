@@ -1,6 +1,6 @@
 from django.db.models import *
 from accounts.models import User
-from datetime import datetime,timezone
+from datetime import datetime, timezone
 from forumSzkolne.settings import TIME_ZONE
 
 
@@ -49,7 +49,7 @@ class Question(Model):
         now = datetime.now(mytimezone)
         if self.createDate.date() == now.date():
             if self.createDate.hour == now.hour:
-                if now.minute - self.createDate.minute !=0:
+                if now.minute - self.createDate.minute != 0:
                     return str(now.minute - self.createDate.minute)+" min. temu"
                 else:
                     return "teraz"
@@ -61,3 +61,9 @@ class Question(Model):
                 return str(diff)+" dzień temu"
             else:
                 return str(diff)+" dni temu"
+
+    def display_subject(self):
+        mySubjects = {'mat': 'Matematyka', 'fiz': 'Fizyka', 'Inf': 'Informatyka',
+                      'pol': 'Język Polski', 'ang': 'Język Angielski', 'nmc': 'Język Niemiecki',
+                      'his': 'Historia', 'bio': 'Biologia', 'che': 'Chemia', 'geo': 'Geografia'}
+        return mySubjects[self.subject]
