@@ -47,23 +47,23 @@ class Question(Model):
     def display_time(self):
         mytimezone = timezone.utc
         now = datetime.now(mytimezone)
-        if self.createDate.date() == now.date():
+        diff = (now - self.createDate).days
+        if diff == 0:
             if self.createDate.hour == now.hour:
                 if now.minute - self.createDate.minute != 0:
                     return str(now.minute - self.createDate.minute)+" min. temu"
                 else:
                     return "teraz"
             else:
-                return str(now.hour - self.createDate.hour)+" godz. temu"
+                return str(now - self.createDate).split(":")[0] + " godz. temu"
         else:
-            diff = (now - self.createDate).days
             if diff == 1:
                 return str(diff)+" dzień temu"
             else:
                 return str(diff)+" dni temu"
 
     def display_subject(self):
-        mySubjects = {'mat': 'Matematyka', 'fiz': 'Fizyka', 'Inf': 'Informatyka',
+        mySubjects = {'mat': 'Matematyka', 'fiz': 'Fizyka', 'inf': 'Informatyka',
                       'pol': 'Język Polski', 'ang': 'Język Angielski', 'nmc': 'Język Niemiecki',
                       'his': 'Historia', 'bio': 'Biologia', 'che': 'Chemia', 'geo': 'Geografia'}
         return mySubjects[self.subject]
