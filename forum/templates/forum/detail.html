@@ -1,17 +1,56 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
-<h1>{{question.title}}</h1>
-<p>{{question.createDate}}</p>
-<p>{{question.desc}}</p>
+<br>
+<br>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="jumbotron py-3" style="height: fit-content; width: 800px;">
+            <div class="row">
+                <div class="col text-left">
+                    <p class="lead">{{question.display_subject}} | {{question.display_time}}</p>
+                </div>
+                <div class="col text-right mr-3">
+                    <p class="lead">Zapytał/a: {{question.user}}</p>
+                </div>
+            </div>
 
-{% if question.image %}
-<img src="{{question.image.url}}">
-{% endif %}
 
-{% if question.user == user %}
-<a href="{% url 'myDetail' question.id %}">Edytuj</a>
-{% endif %}
+            <h2 class="display">{{question.title}}</h2>
 
+            <p class="lead">{{question.desc}}</p>
+            <hr class="my-2">
 
+            <div class="row mt-3">
+                <div class="col content-left">
+                    <div class="row">
+                        <form action="{% url 'like' question.id %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if question.is_liked %}
+                            <button type="submit" class="btn btn-primary ml-3">Podbij</button>
+
+                            {% else %}
+                            <button type="submit" class="btn btn-outline-primary ml-3">Podbij</button>
+                            {% endif %}
+                        </form>
+                        <a class="btn btn-light disabled ml-2" style="color: black;" href="#"
+                            role="button">{{question.total_likes}}</a>
+                    </div>
+                </div>
+
+                {% if question.user == user %}
+                <div class="col text-right">
+                    <a class="btn btn-light mr-1" href="#" role="button">Odpowiedz</a>
+                    <a class="btn btn-light" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+                </div>
+                {% else %}
+                <div class="col text-right">
+                    <a class="btn btn-light mr-1" href="#" role="button">Odpowiedz</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
