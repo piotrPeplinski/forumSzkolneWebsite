@@ -35,7 +35,7 @@ def create(request):
 
 
 def my(request):
-    questions = Question.objects.filter(user=request.user)
+    questions = Question.objects.filter(user=request.user).order_by("-createDate")
     return render(request, 'forum/my.html', {'questions': questions})
 
 

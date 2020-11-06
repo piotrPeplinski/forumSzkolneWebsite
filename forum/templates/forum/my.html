@@ -1,21 +1,57 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
-<h1>Moje Pytania</h1>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <br>
+        <br> 
+        {% for question in questions %}
+
+        <div class="jumbotron py-3" style="height: fit-content; width: 800px;">
+            <div class="row">
+                <div class="col text-left">
+                    <p class="lead">{{question.display_subject}} | {{question.display_time}}</p>
+                </div>
+                <div class="col text-right mr-3">
+                    <p class="lead">Zapytał/a: {{question.user}}</p>
+                </div>
+            </div>
 
 
-{% for question in questions %}
-<a href="{% url 'myDetail' question.id %}">
-    <h2>{{question.title}}</h2>
-</a>
-<p>{{question.createDate}}</p>
-<p>{{question.desc}}</p>
+            <h2 class="display">{{question.title}}</h2>
 
-{% if question.image %}
-<img src="{{question.image.url}}">
-{% endif %}
+            <p class="lead">{{question.desc|truncatechars:100}}</p>
+            <hr class="my-2">
 
-{% endfor %}
+            <div class="row mt-3">
+                <div class="col content-left">
+                    <div class="row">
+                        <form action="{% url 'like' question.id %}" method="POST">
+                            {% csrf_token %}
 
+                            {% if question.is_liked %}
+                            <button type="submit" class="btn btn-primary ml-3">Podbij</button>
+
+                            {% else %}
+                            <button type="submit" class="btn btn-outline-primary ml-3">Podbij</button>
+                            {% endif %}
+                        </form>
+                        <a class="btn btn-light disabled ml-2" style="color: black;" href="#"
+                            role="button">{{question.total_likes}}</a>
+                    </div>
+                </div>
+                <div class="col text-right">
+                    <a class="btn btn-light mr-1" href="{% url 'detail' question.id %}" role="button">Zobacz
+                        odpowiedzi</a>
+                    <a class="btn btn-light" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock content %}
