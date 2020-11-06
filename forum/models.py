@@ -49,9 +49,9 @@ class Question(Model):
         now = datetime.now(mytimezone)
         diff = (now - self.createDate).days
         if diff == 0:
-            if self.createDate.hour == now.hour:
+            if str(now - self.createDate).split(":")[0] == "0":
                 if now.minute - self.createDate.minute != 0:
-                    return str(now.minute - self.createDate.minute)+" min. temu"
+                    return str(now - self.createDate).split(":")[1]+" min. temu"
                 else:
                     return "teraz"
             else:
