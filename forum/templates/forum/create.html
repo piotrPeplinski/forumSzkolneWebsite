@@ -1,44 +1,87 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
-<h1>Zadaj pytanie</h1>
-{{error}}
-<form method="POST" enctype="multipart/form-data">
-    
-    <p><label for="id_title">Title:</label>
-        <input type="text" name="title" maxlength="300" required="" id="id_title"></p>
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <br>
+        <h1 class="mb-4">Zadaj pytanie</h1>
 
-    <label for="id_desc">Desc:</label>
-    <textarea name="desc" cols="40" rows="10" required="" id="id_desc"></textarea>
+        {{error}}
+        <form method="POST" enctype="multipart/form-data">
 
-    <label for="id_image">Image:</label>
-    <input type="file" name="image" accept="image/*" id="id_image">
-
-    <select name="school" required="" id="id_school">
-        <option value="" selected disabled>Wybierz szkołę</option>
-        <option value="ps">Szkoła Podstawowa</option>
-        <option value="ms">Szkoła Średnia</option>
-        <option value="cl">Studia</option>
-    </select>
-
-    <select name="subject" required="" id="id_subject">
-        <option value="" selected disabled>Wybierz przedmiot</option>
-        <option value="mat">Matematyka</option>
-        <option value="fiz">Fizyka</option>
-        <option value="inf">Informatyka</option>
-        <option value="pol">Język Polski</option>
-        <option value="ang">Język Angielski</option>
-        <option value="nmc">Język Niemiecki</option>
-        <option value="his">Historia</option>
-        <option value="bio">Biologia</option>
-        <option value="che">Chemia</option>
-        <option value="geo">Geografia</option>
-    </select>
-
-    <button type="submit">Zadaj pytanie</button>
-    {% csrf_token %}
-</form>
+            <div class="form-group">
+                <label for="id_title">Tytuł</label>
+                <input type="text" class="form-control" name="title" maxlength="300" required="" id="id_title"
+                    placeholder="Tytuł pytania">
+            </div>
 
 
+            <div class="form-group">
+                <label for="id_desc">Opis</label>
+                <textarea name="desc" class="form-control" cols="40" rows="10" required="" id="id_desc"
+                    placeholder="Opisz swój problem"></textarea>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 95px;">Zdjęcie</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" value="Szukaj" name="image" accept="image/*"
+                                id="id_image">
+                            <label class="custom-file-label" for="id_image">Wybierz plik</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width: 95px;" for="id_school">Poziom</label>
+                        </div>
+                        <select name="school" class="custom-select" style="size: 80px;" required="" id="id_school">
+                            <option value="" selected disabled>Wybierz szkołę</option>
+                            <option value="ps">Szkoła Podstawowa</option>
+                            <option value="ms">Szkoła Średnia</option>
+                            <option value="cl">Studia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width: 95px;" for="id_subject">Przedmiot</label>
+                        </div>
+                        <select name="subject" class="custom-select" required="" id="id_subject">
+                            <option value="" selected disabled>Wybierz przedmiot</option>
+                            <option value="mat">Matematyka</option>
+                            <option value="fiz">Fizyka</option>
+                            <option value="inf">Informatyka</option>
+                            <option value="pol">Język Polski</option>
+                            <option value="ang">Język Angielski</option>
+                            <option value="nmc">Język Niemiecki</option>
+                            <option value="his">Historia</option>
+                            <option value="bio">Biologia</option>
+                            <option value="che">Chemia</option>
+                            <option value="geo">Geografia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Zadaj pytanie</button>
+            {% csrf_token %}
+        </form>
+
+    </div>
+</div>
 
 {% endblock content %}
