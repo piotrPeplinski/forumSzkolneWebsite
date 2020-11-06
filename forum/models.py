@@ -50,6 +50,8 @@ class Question(Model):
         diff = (now - self.createDate).days
         if diff == 0:
             if str(now - self.createDate).split(":")[0] == "0":
+                if now.hour == self.createDate.hour and now.minute - self.createDate.minute != 0:
+                    return str(now.minute - self.createDate.minute)+" min. temu"
                 if now.minute - self.createDate.minute != 0:
                     return str(now - self.createDate).split(":")[1]+" min. temu"
                 else:
