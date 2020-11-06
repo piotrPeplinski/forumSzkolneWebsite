@@ -1,59 +1,119 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <br>
+        <h1 class="mb-4">Edytuj pytanie</h1>
 
-<h1>Edytuj pytanie</h1>
+        <h4>{{error}}</h4>
 
-<h4>{{error}}</h4>
+        <form method="POST" enctype="multipart/form-data">
 
-<form method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="csrfmiddlewaretoken"
-        value="eMhbcSesUA524ztDnlFVUc5RhHsFL6vU9dvAW8uVATc2ksKT5nvq9TSvCYT0Yp0y">
+            <div class="form-group">
+                <label for="id_title">Tytuł</label>
+                <input type="text" class="form-control" name="title" maxlength="300" required=""
+                    value="{{question.title}}" id="id_title" placeholder="Tytuł pytania">
+            </div>
 
-    <p><label for="id_title">Title:</label> <input type="text" name="title" value="{{question.title}}" maxlength="300"
-            required="" id="id_title"></p>
+            <div class="form-group">
+                <label for="id_desc">Opis</label>
+                <textarea name="desc" class="form-control" cols="40" rows="10" required="" id="id_desc"
+                    placeholder="Opisz swój problem">{{question.desc}}</textarea>
+            </div>
 
-    <p><label for="id_desc">Desc:</label> <textarea name="desc" cols="40" rows="10" required=""
-            id="id_desc">{{question.desc}}</textarea></p>
 
-    <p>{{form.image}}</p>
+            {% if question.image %}
+            <div class="row">
+                <div class="col-md-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item mt-2"><a href="{{question.image.url}}">Twój obrazek</a></li>
+                            <li class="breadcrumb-item active mt-2" aria-current="page"><input type="checkbox"
+                                    name="image-clear" id="image-clear_id">
+                                <label for="image-clear_id">Wyczyść</label></li>
+                        </ol>
+                    </nav>
 
-    <p><select name="school" id="id_school" required>
-            {% for id,school in question.schools %}
-
-            {% if id == question.school %}
-            <option value="{{id}}" selected>{{school}}</option>
-            {% elif id == "" %}
-            <option value="{{id}}" disabled>{{school}}</option>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 95px;">Zdjęcie</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" value="Szukaj" name="image" accept="image/*"
+                                id="id_image">
+                            <label class="custom-file-label" for="id_image">Wybierz plik</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% else %}
-            <option value="{{id}}">{{school}}</option>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 95px;">Zdjęcie</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" value="Szukaj" name="image" accept="image/*"
+                                id="id_image">
+                            <label class="custom-file-label" for="id_image">Wybierz plik</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% endif %}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width: 95px;" for="id_school">Poziom</label>
+                        </div>
+                        <select name="school" class="custom-select" id="id_school" required>
+                            {% for id,school in question.schools %}
 
-            {% endfor %}
-        </select></p>
+                            {% if id == question.school %}
+                            <option value="{{id}}" selected>{{school}}</option>
+                            {% elif id == "" %}
+                            <option value="{{id}}" disabled>{{school}}</option>
+                            {% else %}
+                            <option value="{{id}}">{{school}}</option>
+                            {% endif %}
 
-    <p><select name="subject" id="id_subject" required>
-            {% for id,subject in question.subjects %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width: 95px;" for="id_subject">Przedmiot</label>
+                        </div>
+                        <select name="subject" class="custom-select" id="id_subject" required>
+                            {% for id,subject in question.subjects %}
 
-            {% if id == question.subject %}
-            <option value="{{id}}" selected>{{subject}}</option>
-            {% elif id == "" %}
-            <option value="{{id}}" disabled>{{subject}}</option>
-            {% else %}
-            <option value="{{id}}">{{subject}}</option>
-            {% endif %}
+                            {% if id == question.subject %}
+                            <option value="{{id}}" selected>{{subject}}</option>
+                            {% elif id == "" %}
+                            <option value="{{id}}" disabled>{{subject}}</option>
+                            {% else %}
+                            <option value="{{id}}">{{subject}}</option>
+                            {% endif %}
 
-            {% endfor %}
-        </select></p>
-
-
-    <button type="submit">Zapisz</button>
-    {% csrf_token %}
-</form>
-<form action="{% url 'delete' question.id %}" method="POST">
-    {% csrf_token %}
-    <button type="submit">Usuń pytanie</button>
-</form>
-
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary mx-3">Zapisz</button>
+                {% csrf_token %}
+        </form>
+        <form action="{% url 'delete' question.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Usuń pytanie</button>
+        </form>
+    </div>
+</div>
+</div>
 
 {% endblock content %}
