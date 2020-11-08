@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forum.models import Question
+from forum.models import Question, Answer
 
 
 class DateField(admin.ModelAdmin):
@@ -7,3 +7,5 @@ class DateField(admin.ModelAdmin):
 
 
 admin.site.register(Question, DateField)
+
+admin.site.register(Answer)
