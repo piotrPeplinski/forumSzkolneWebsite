@@ -21,6 +21,12 @@
             <p class="lead">{{question.desc}}</p>
             <hr class="my-2">
 
+            {% if question.image %}
+            <div class="container text-center">
+                <img src="{{question.image.url}}" class="img-fluid my-2">
+            </div>
+            {% endif %}
+
             <div class="row mt-3">
                 <div class="col content-left">
                     <div class="row">
