@@ -76,7 +76,7 @@ class Answer(Model):
     image = ImageField(upload_to='images/', blank=True)
     createDate = DateTimeField(auto_now_add=True)
     user = ForeignKey(User, on_delete=CASCADE)
-    question = ForeignKey(Question, on_delete=CASCADE)
+    question = ForeignKey(Question, on_delete=CASCADE, related_name='answers')
 
     def __str__(self):
         return self.desc[:12]

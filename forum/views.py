@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
-from forum.models import Question
+from forum.models import Question, Answer
 from forum.forms import QuestionForm
 
 
@@ -35,7 +35,8 @@ def create(request):
 
 
 def my(request):
-    questions = Question.objects.filter(user=request.user).order_by("-createDate")
+    questions = Question.objects.filter(
+        user=request.user).order_by("-createDate")
     return render(request, 'forum/my.html', {'questions': questions})
 
 
@@ -78,7 +79,8 @@ def deleteQuestion(request, questionId):
 
 def detail(request, questionId):
     question = get_object_or_404(Question, pk=questionId)
-    return render(request, 'forum/detail.html', {'question': question})
+    answers = question.answers.all().order_by("-createDate")
+    return render(request, 'forum/detail.html', {'question': question, 'answers': answers})
 
 
 def like(request, questionId):
