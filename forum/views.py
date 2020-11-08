@@ -79,7 +79,12 @@ def deleteQuestion(request, questionId):
 
 def detail(request, questionId):
     question = get_object_or_404(Question, pk=questionId)
+    if question.likes.filter(id=request.user.id):
+        question.is_liked = True
     answers = question.answers.all().order_by("-createDate")
+    for answer in answers:
+        if answer.likes.filter(id=request.user.id).exists():
+            answer.is_liked = True
     return render(request, 'forum/detail.html', {'question': question, 'answers': answers})
 
 
@@ -91,4 +96,15 @@ def like(request, questionId):
         else:
             question.likes.add(request.user)
         path = request.get_full_path().split("/")
-        return redirect('http://127.0.0.1:8000/'+path[1])
+        return redirect('http://127.0.0.1:8000/'+path[1]+"/"+str(questionId))
+
+
+def likeAnswer(request, answerId):
+    if request.method == 'POST':
+        answer = get_object_or_404(Answer, pk=answerId)
+        if answer.likes.filter(id=request.user.id).exists():
+            answer.likes.remove(request.user)
+        else:
+            answer.likes.add(request.user)
+        path = request.get_full_path().split("/")
+        return redirect('http://127.0.0.1:8000'+path[0]+"/"+path[1]+"/"+str(answer.question.id))

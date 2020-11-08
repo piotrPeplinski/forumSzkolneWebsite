@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        
+
         {% if question.answers.count > 0 %}
 
         <h1 class="mb-4">{{answers.count}} {{answers.count|pluralize_pl:"Odpowiedź, Odpowiedzi"}}</h1>
@@ -89,7 +89,7 @@
             <div class="row mt-3">
                 <div class="col content-left">
                     <div class="row">
-                        <form action="" method="POST">
+                        <form action="{% url 'likeAnswer' answer.id %}" method="POST">
                             {% csrf_token %}
 
                             {% if answer.is_liked %}

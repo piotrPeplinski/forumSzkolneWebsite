@@ -77,9 +77,13 @@ class Answer(Model):
     createDate = DateTimeField(auto_now_add=True)
     user = ForeignKey(User, on_delete=CASCADE)
     question = ForeignKey(Question, on_delete=CASCADE, related_name='answers')
+    likes = ManyToManyField(User, related_name='answerLikes', blank=True)
 
     def __str__(self):
         return self.desc[:12]
+
+    def total_likes(self):
+        return self.likes.count()
 
     def display_time(self):
         mytimezone = timezone.utc
