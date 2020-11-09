@@ -48,12 +48,12 @@
 
                 {% if question.user == user %}
                 <div class="row">
-                        <form action="{% url 'createAnswer' question.id %}">
-                            {% csrf_token %}
-                            <button class="btn btn-light mr-2" type="submit">Odpowiedz</button>
-                        </form>
-                        <a class="btn btn-light mr-4" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
-                    
+                    <form action="{% url 'createAnswer' question.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-light mr-2" type="submit">Odpowiedz</button>
+                    </form>
+                    <a class="btn btn-light mr-4" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+
                 </div>
                 {% else %}
                 <div class="col text-right">
@@ -112,7 +112,11 @@
 
                         <div class="col text-right">
                             {% if answer.user == user %}
-                            <button type="submit" class="btn btn-light">Edytuj</button>
+                            <form action="{% url 'editAnswer' answer.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-light">Edytuj</button>
+                            </form>
+
                             {% endif %}
                         </div>
                     </div>

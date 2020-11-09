@@ -126,3 +126,21 @@ def createAnswer(request, questionId):
             error = 'Something went wrong. Try again.'
             return render(request, 'forum/createAnswer.html',
                           {'form': AnswerForm(), 'question': question, 'error': error})
+
+
+def editAnswer(request, answerId):
+    answer = get_object_or_404(Answer, pk=answerId)
+    question = get_object_or_404(Question, pk=answer.question.id)
+    if request.method == 'GET':
+        form = AnswerForm(instance=answer)
+        return render(request, 'forum/editAnswer.html',
+                      {'form': form, 'question': question, 'answer': answer})
+    else:
+        form = AnswerForm(request.POST, request.FILES, instance=answer)
+        if form.is_valid():
+            form.save()
+            return redirect('http://127.0.0.1:8000/latest/'+str(question.id))
+        else:
+            error = 'Something went wrong. Try again.'
+            return render(request, 'forum/editAnswer.html',
+                          {'form': form, 'question': question, 'answer': answer, 'error': error})
