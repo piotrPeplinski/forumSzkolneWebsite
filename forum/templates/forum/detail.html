@@ -47,13 +47,21 @@
                 </div>
 
                 {% if question.user == user %}
-                <div class="col text-right">
-                    <a class="btn btn-light mr-1" href="#" role="button">Odpowiedz</a>
-                    <a class="btn btn-light" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+                <div class="row">
+                        <form action="{% url 'createAnswer' question.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-light mr-2" type="submit">Odpowiedz</button>
+                        </form>
+                        <a class="btn btn-light mr-4" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+                    
                 </div>
                 {% else %}
                 <div class="col text-right">
-                    <a class="btn btn-light mr-1" href="#" role="button">Odpowiedz</a>
+                    <form action="{% url 'createAnswer' question.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-light mr-1" type="submit">Odpowiedz</button>
+                    </form>
+
                 </div>
                 {% endif %}
             </div>
@@ -85,7 +93,7 @@
             </div>
             <hr class="my-2">
             {% endif %}
-            
+
             <div class="row mt-3">
                 <div class="col content-left">
                     <div class="row">

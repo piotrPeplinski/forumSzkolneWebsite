@@ -40,10 +40,13 @@
                             role="button">{{question.total_likes}}</a>
                     </div>
                 </div>
-                <div class="col text-right">
-                    <a class="btn btn-light mr-1" href="{% url 'detail' question.id %}" role="button">Zobacz
+                <div class="row">
+                    <a class="btn btn-light mr-2" href="{% url 'detail' question.id %}" role="button">Zobacz
                         odpowiedzi</a>
-                    <a class="btn btn-light" href="#" role="button">Odpowiedz</a>
+                        <form action="{% url 'createAnswer' question.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-light mr-4" type="submit">Odpowiedz</button>
+                        </form>
                 </div>
             </div>
 

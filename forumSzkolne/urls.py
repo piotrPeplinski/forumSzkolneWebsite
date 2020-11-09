@@ -34,6 +34,8 @@ urlpatterns = [
     path('latest/<int:questionId>/like', views.like, name='like'),
     path('latest/<int:answerId>/likeAnswer',
          views.likeAnswer, name='likeAnswer'),
+    path('latest/<int:questionId>/createAnswer',
+         views.createAnswer, name='createAnswer'),
 ]
 
 if settings.DEBUG:

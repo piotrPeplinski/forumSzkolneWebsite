@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from forum.models import Question, Answer
-from forum.forms import QuestionForm
+from forum.forms import QuestionForm, AnswerForm
 
 
 def home(request):
@@ -108,3 +108,21 @@ def likeAnswer(request, answerId):
             answer.likes.add(request.user)
         path = request.get_full_path().split("/")
         return redirect('http://127.0.0.1:8000'+path[0]+"/"+path[1]+"/"+str(answer.question.id))
+
+
+def createAnswer(request, questionId):
+    question = get_object_or_404(Question, pk=questionId)
+    if request.method == 'GET':
+        return render(request, 'forum/createAnswer.html', {'form': AnswerForm(), 'question': question})
+    else:
+        form = AnswerForm(request.POST, request.FILES)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.user = request.user
+            answer.question = question
+            answer.save()
+            return redirect('http://127.0.0.1:8000/latest/'+str(questionId))
+        else:
+            error = 'Something went wrong. Try again.'
+            return render(request, 'forum/createAnswer.html',
+                          {'form': AnswerForm(), 'question': question, 'error': error})
