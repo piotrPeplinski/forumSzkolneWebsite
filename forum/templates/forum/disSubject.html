@@ -4,7 +4,10 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <br>
-        <br>
+        <br> 
+        
+        {% if questions %}
+            
         {% for question in questions %}
 
         <div class="jumbotron py-3" style="height: fit-content; width: 85%;">
@@ -40,10 +43,13 @@
                             role="button">{{question.total_likes}}</a>
                     </div>
                 </div>
-                <div class="col text-right">
+                <div class="row">
                     <a class="btn btn-light mr-2" href="{% url 'detail' question.id %}" role="button">Zobacz
                         odpowiedzi</a>
-                    <a class="btn btn-light" href="{% url 'myDetail' question.id %}" role="button">Edytuj</a>
+                        <form action="{% url 'createAnswer' question.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-light mr-4" type="submit">Odpowiedz</button>
+                        </form>
                 </div>
             </div>
 
@@ -51,6 +57,9 @@
         </div>
 
         {% endfor %}
+        {% else %}
+        <h1 class="text-center">Brak pytań z tego przedmiotu :(</h1>
+        {% endif %}
     </div>
 </div>
 

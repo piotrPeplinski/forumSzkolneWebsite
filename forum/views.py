@@ -144,3 +144,14 @@ def editAnswer(request, answerId):
             error = 'Something went wrong. Try again.'
             return render(request, 'forum/editAnswer.html',
                           {'form': form, 'question': question, 'answer': answer, 'error': error})
+
+
+def disSubject(request, subjectKey):
+    questions = Question.objects.filter(
+        subject=subjectKey).order_by('-createDate')
+    for question in questions:
+        if question.likes.filter(id=request.user.id).exists():
+            question.is_liked = True
+        else:
+            question.is_liked = False
+    return render(request, 'forum/disSubject.html', {'questions': questions})

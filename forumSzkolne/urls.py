@@ -38,6 +38,7 @@ urlpatterns = [
          views.createAnswer, name='createAnswer'),
     path('latest/<int:answerId>/editAnswer',
          views.editAnswer, name='editAnswer'),
+    path('disSubject/<str:subjectKey>', views.disSubject, name='disSubject'),
 ]
 
 if settings.DEBUG:
