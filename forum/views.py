@@ -3,6 +3,7 @@ from forum.models import Question, Answer
 from forum.forms import QuestionForm, AnswerForm
 from django.db.models import Q
 from collections import OrderedDict
+#from django.core.mail import send_mail
 
 
 def home(request):
@@ -123,6 +124,15 @@ def createAnswer(request, questionId):
             answer.user = request.user
             answer.question = question
             answer.save()
+            '''
+            send_mail(
+                'Ktoś właśnie odpowiedział na twoje pytanie!',
+                '{} odpowiedział na twoje pytanie: {}. Przejdź do portalu, aby zobaczyć odpowiedź.'.format(
+                    answer.user.username, question.title),
+                'p.peplaj@gmail.com',
+                ['{}'.format(question.user.email)],
+                False,
+            )'''
             return redirect('http://127.0.0.1:8000/latest/'+str(questionId))
         else:
             error = 'Coś poszło nie tak. Spróbuj ponownie.'
