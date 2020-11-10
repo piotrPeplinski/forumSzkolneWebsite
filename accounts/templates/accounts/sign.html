@@ -1,14 +1,45 @@
 {% extends 'forum/base.html' %}
 {% block content %}
 
-<h1>Sign Up</h1>
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-4 col-md-5 col-sm-5">
+        <h1>Załóż konto</h1>
 
-<h3>{{error}}</h3>
-<form method="POST">
-    {{form.as_p}}
-    {% csrf_token %}
-    <button type="submit">Sign Up</button>
-</form>
+        {% if error %}
+        <div class="alert alert-danger text-center mt-4" role="alert">
+            <h4>{{error}}</h4>
+        </div>
+        {% endif %}
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Nick</label>
+                <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username"
+                    autofocus="" required="" id="id_username" class="form-control">
+                <small class="form-text text-muted">Wybierz nick, którego chcesz używać na naszej stronie.
+                    Jeżeli będzie zajęty powiadomimy cię o tym.
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="username">E-mail</label>
+                <input type="email" name="email" maxlength="254" autocapitalize="none" autocomplete="email" autofocus=""
+                    required="" id="id_email" class="form-control">
 
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" class="form-control" name="password1" autocomplete="new-password" required=""
+                    id="id_password1">
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" class="form-control" name="password2" autocomplete="new-password" required=""
+                    id="id_password2">
+            </div>
+            
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Załóż konto</button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
