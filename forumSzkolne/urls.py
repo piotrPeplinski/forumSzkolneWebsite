@@ -39,6 +39,7 @@ urlpatterns = [
     path('latest/<int:answerId>/editAnswer',
          views.editAnswer, name='editAnswer'),
     path('disSubject/<str:subjectKey>', views.disSubject, name='disSubject'),
+    path('search', views.search, name='search'),
 ]
 
 if settings.DEBUG:

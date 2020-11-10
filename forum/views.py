@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from forum.models import Question, Answer
 from forum.forms import QuestionForm, AnswerForm
+from django.db.models import Q
+from collections import OrderedDict
 
 
 def home(request):
@@ -155,3 +157,18 @@ def disSubject(request, subjectKey):
         else:
             question.is_liked = False
     return render(request, 'forum/disSubject.html', {'questions': questions})
+
+
+def search(request):
+    keyWords = request.POST.get('q').split(" ")
+    for keyWord in keyWords:
+        querySet = Question.objects.filter(
+            Q(title__icontains=keyWord) | Q(desc__icontains=keyWord)
+        ).order_by("-createDate")
+        try:
+            questions = questions | querySet
+        except:
+            questions = querySet
+        questions.order_by('-createDate')
+    return render(request, 'forum/latest.html',
+                  {'questions': list(OrderedDict.fromkeys(questions))})
