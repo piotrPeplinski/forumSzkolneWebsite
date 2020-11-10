@@ -29,7 +29,7 @@ def create(request):
             question.save()
             return redirect('latest')
         else:
-            error = 'Something went wrong. Try again.'
+            error = 'Coś poszło nie tak. Spróbuj ponownie.'
             return render(request, 'forum/create.html',
                           {'form': QuestionForm(), 'error': error})
 
@@ -64,7 +64,7 @@ def myDetail(request, questionId):
             form.save()
             return redirect('my')
         else:
-            error = 'Something went wrong. Try again.'
+            error = 'Coś poszło nie tak. Spróbuj ponownie.'
             return render(request, 'forum/myDetail.html',
                           {'form': QuestionForm(instance=question), 'error': error,
                            'question': question})
@@ -123,7 +123,7 @@ def createAnswer(request, questionId):
             answer.save()
             return redirect('http://127.0.0.1:8000/latest/'+str(questionId))
         else:
-            error = 'Something went wrong. Try again.'
+            error = 'Coś poszło nie tak. Spróbuj ponownie.'
             return render(request, 'forum/createAnswer.html',
                           {'form': AnswerForm(), 'question': question, 'error': error})
 
@@ -141,7 +141,7 @@ def editAnswer(request, answerId):
             form.save()
             return redirect('http://127.0.0.1:8000/latest/'+str(question.id))
         else:
-            error = 'Something went wrong. Try again.'
+            error = 'Coś poszło nie tak. Spróbuj ponownie.'
             return render(request, 'forum/editAnswer.html',
                           {'form': form, 'question': question, 'answer': answer, 'error': error})
 

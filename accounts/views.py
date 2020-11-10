@@ -16,15 +16,15 @@ def sign(request):
                 user = User.objects.create_user(request.POST['username'],
                                                 request.POST['email'], request.POST['password2'])
             except IntegrityError:
-                error = "This username is already taken. Try different one."
+                error = "Ten nick jest już zajęty :("
                 return render(request, 'accounts/sign.html',
                               {'form': SignUpForm(), 'error': error})
             else:
                 user.save()
                 login(request, user)
-                return redirect('home')
+                return redirect('latest')
         else:
-            error = "Passwords didn't match. Try again."
+            error = "Hasła nie są takie same. Spróbuj ponownie."
             return render(request, 'accounts/sign.html',
                           {'form': SignUpForm(), 'error': error})
 
@@ -43,8 +43,8 @@ def log(request):
                             password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('latest')
         else:
-            error = "Incorrect username, email or password. Try again."
+            error = "Niepoprawny nick, email lub hasło. Spróbuj ponownie."
             return render(request, 'accounts/log.html',
                           {'form': LoginForm(), 'error': error})
