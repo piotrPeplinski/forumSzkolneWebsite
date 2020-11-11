@@ -4,6 +4,7 @@ from forum.forms import QuestionForm, AnswerForm
 from django.db.models import Q
 from collections import OrderedDict
 #from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -20,7 +21,7 @@ def latest(request):
     return render(request, 'forum/latest.html',
                   {'questions': questions})
 
-
+@login_required
 def create(request):
     if request.method == 'GET':
         return render(request, 'forum/create.html', {'form': QuestionForm()})
@@ -36,24 +37,14 @@ def create(request):
             return render(request, 'forum/create.html',
                           {'form': QuestionForm(), 'error': error})
 
-
+@login_required
 def my(request):
     questions = Question.objects.filter(
         user=request.user).order_by("-createDate")
     return render(request, 'forum/my.html', {'questions': questions})
 
-
+@login_required
 def myDetail(request, questionId):
-    '''
-    mySchools = {'ms': 'Szkoła Średnia',
-                 'ps': 'Szkoła Podstawowa', 'cl': 'Studia'}
-    mySubjects = {'mat': 'Matematyka', 'fiz': 'Fizyka', 'Inf': 'Informatyka',
-                  'pol': 'Język Polski', 'ang': 'Język Angielski', 'nmc': 'Język Niemiecki',
-                  'his': 'Historia', 'bio': 'Biologia', 'che': 'Chemia', 'geo': 'Geografia'}
-    mySchool = mySchools[question.school]
-    mySubject = mySubjects[question.subject]
-    '''
-
     question = get_object_or_404(
         Question, pk=questionId, user=request.user)
 
@@ -72,10 +63,10 @@ def myDetail(request, questionId):
                           {'form': QuestionForm(instance=question), 'error': error,
                            'question': question})
 
-
+@login_required
 def deleteQuestion(request, questionId):
     if request.method == 'POST':
-        question = get_object_or_404(Question, pk=questionId)
+        question = get_object_or_404(Question, pk=questionId,user=request.user)
         question.delete()
         return redirect('my')
 
@@ -90,7 +81,7 @@ def detail(request, questionId):
             answer.is_liked = True
     return render(request, 'forum/detail.html', {'question': question, 'answers': answers})
 
-
+@login_required
 def like(request, questionId):
     if request.method == 'POST':
         question = get_object_or_404(Question, pk=questionId)
@@ -101,7 +92,7 @@ def like(request, questionId):
         path = request.get_full_path().split("/")
         return redirect('http://127.0.0.1:8000/'+path[1]+"/"+str(questionId))
 
-
+@login_required
 def likeAnswer(request, answerId):
     if request.method == 'POST':
         answer = get_object_or_404(Answer, pk=answerId)
@@ -112,7 +103,7 @@ def likeAnswer(request, answerId):
         path = request.get_full_path().split("/")
         return redirect('http://127.0.0.1:8000'+path[0]+"/"+path[1]+"/"+str(answer.question.id))
 
-
+@login_required
 def createAnswer(request, questionId):
     question = get_object_or_404(Question, pk=questionId)
     if request.method == 'GET':
@@ -139,9 +130,9 @@ def createAnswer(request, questionId):
             return render(request, 'forum/createAnswer.html',
                           {'form': AnswerForm(), 'question': question, 'error': error})
 
-
+@login_required
 def editAnswer(request, answerId):
-    answer = get_object_or_404(Answer, pk=answerId)
+    answer = get_object_or_404(Answer, pk=answerId,user=request.user)
     question = get_object_or_404(Question, pk=answer.question.id)
     if request.method == 'GET':
         form = AnswerForm(instance=answer)

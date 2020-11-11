@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 
-MEDIA_ROOT =  BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 DEFAULT_FROM_EMAIL = 'myEmail'
@@ -135,3 +135,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'myEmail'
 EMAIL_HOST_PASSWORD = 'passwordToMyEmail'
+
+LOGIN_URL = 'http://127.0.0.1:8000/auth/log'
